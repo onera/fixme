@@ -1,36 +1,22 @@
-# Post-processing tool v1.0
+# Flow Inspector X Modelling Errors (FIXME) v1.0
 
- This tool currently supports:
+FIXME is a tool coded in Scala used to analyse fault injection strategies targeting CNN hardware accelerators 
+to improve the fault injection experiments on such hardware architectures. It uses the formal modelling of RTL defined in
+[Quality of fault injection strategies on hardware accelerator](https://link.springer.com/chapter/10.1007/978-3-031-14835-4_15)
 
-- processing results from fault injection campaign on Haddoc2 streaming architecture
-- abstraction of Haddoc2 into flow based formalization
-- coverage computation of a fault injection strategy
-
+This tool currently supports:
+1. Analysis of accelerator using flow based modelling for improving fault injection:
+  - computation of alive intervals of registers for any input data
+  - computation of fault equivalence classes for any input flow
+  - coverage computation of any provided fault injection strategy (i.e. fault list)
+2. Analysis of fault injection experiments for fault equivalence refinement
+  - processing results from fault injection campaign on CNN accelerator streaming architecture
+  - computation of equivalence classes based on the effect on CNN scores and/or classfication
+  - support addition of custom metrics (indicators)
+ 
 > **Quick Setup**
 > Please follow the steps in [docker installation](#docker)
 > and then follow the [run example guide](#examples).
-
-## Index
-
-- [Post-processing tool v1.0](#post-processing-tool-v10)
-  - [Index](#index)
-  - [Installation](#installation)
-    - [Docker](#docker)
-      - [Requirements](#requirements)
-      - [Run a docker container](#run-a-docker-container)
-        - [Get the docker image](#get-the-docker-image)
-        - [Or Build the docker image from sources](#or-build-the-docker-image-from-sources)
-        - [Run a container](#run-a-container)
-      - [Provided makefile](#provided-makefile)
-    - [Full installation](#full-installation)
-      - [External tools requirements](#external-tools-requirements)
-  - [Usage](#usage)
-    - [Mandatory campaign files](#mandatory-campaign-files)
-    - [Measure strategy and indicators](#measure-strategy-and-indicators)
-      - [Example of indicators](#example-of-indicators)
-        - [Example 1](#example-1)
-  - [Examples](#examples)
-    - [Minimal example](#minimal-example)
 
 ## Installation
 
@@ -44,34 +30,25 @@ On Linux, install the package **docker.io**
 
 On Windows, install [Docker desktop](https://docs.docker.com/desktop/windows/install/)
 
-#### Run a docker container
+#### Instructions 
 
-##### Get the docker image
+##### Build the docker image from sources
 
-You can download the docker image tar [here](https://nxp1.sharepoint.com/:u:/r/sites/FuSa_for_NN_ML-Onera-NXPexchange/Shared%20Documents/Onera-NXP%20exchange/postprocessing/posprocessing-v1.0.tar?csf=1&web=1&e=eEgqtm).
-Then run in a terminal:
-
-```bash
-docker load -i postprocess-v1.0.tar
-```
-
-##### Or Build the docker image from sources
-
-Alternatively, you can build the image by running in a terminal (with elevated privileges in linux based OS):
+You can build the image by running in a terminal (with elevated privileges in linux based OS):
 
 ```bash
-cd postprocessing
-docker build -t i_postprocessing-v1.0 .
+cd fixme
+docker build -t i_fixme-v1.0 .
 ```
 
 ##### Run a container
 
-Once you have the image loaded, start a new container with:
+Once you have the image built, start a new container with:
 
 ```bash
-docker run --name c_postprocessing-v1.0 \
+docker run --name c_fixme-v1.0 \
 -v ${PWD}/output:/home/output \
--v ${PWD}/data:/home/data -t -i i_postprocessing-v1.0
+-v ${PWD}/data:/home/data -t -i i_fixme-v1.0
 ```
 
 > The folders **output** and **data**
@@ -94,7 +71,7 @@ To launch a command in the container just enter:
 make docker_run CMD=<CMD>
 ```
 
-This will build the image, create a container and start **\<CMD\>**(default launch the sbt shell) in the container.
+This will build the image, create a container and start **\<CMD\>** (by default it launches the sbt shell) in the container.
 
 To remove the generated container, run:
 
@@ -108,7 +85,7 @@ To remove the generated image, run:
 make docker_rmi
 ```
 
-### Full installation
+### Manual installation
 
 #### External tools requirements
 
