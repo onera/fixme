@@ -1,0 +1,47 @@
+
+metric ::= arithExpr | association
+
+arithExpr ::= addition | "|" arithExpr "|"
+addition ::= term (additionOperator term)?
+term ::= factor (productOperator  factor)*
+factor ::= "(" arithExpr ")" | number
+productOperator ::= "*" | "/"
+additionOperator ::= "+" | "-"
+number ::= integer | float | arithFunction
+arithFunction ::= list "." ( "count(" booleanExpression ")" | "size")
+
+booleanExpression ::=  not? ("(" booleanExpression ")" | boolean) (andOr not? ("(" booleanExpression ")" | boolean))*
+
+andOr ::= "&&" | "||"
+not ::= "!"
+boolean ::= condition | boolFunction | failureCondition
+boolFunction ::= list "." ( "forall"| "exists") "(" booleanExpression ")"
+
+list ::= dataset | injections | scenarios | classes
+
+variable ::= class | injection | data | scenario
+class ::= "class" | (injection ".repr")
+injection ::= "injection" | (scenario ".injection") | (class ".repr")
+data ::= "data" | scenario ".data"
+scenario ::= "scenario"
+
+failureCondition ::= id "(" data "," injection ")"
+
+id ::= string
+
+association ::= list ".foreach(" arithExpr ")"
+
+scenarios ::= "scenarios"
+injections ::= "injections"
+dataset ::= "dataset"
+classes ::= "classes"
+
+
+comment ::= ("//" string | "/*" string "*/")
+float ::= "-"? digits "." digits
+integer ::= "-"? digits
+string ::= "'" {alphaChar | digit}+ "'"
+alphaChar ::= "a"| "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" |
+"A"| "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z"
+digits ::= (digit)+
+digit ::= "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"

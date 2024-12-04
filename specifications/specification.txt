@@ -1,0 +1,30 @@
+Int :== [0-9]+
+IntExp :== Int 'E' ('+'|'-') Int
+Coma :== ','
+Hashtag :== '#'
+Equal :== '='
+Id :== [0-9,A-Z,a-z,_,-]+
+Null :== 'Null'
+Separator :== '####'
+Dataset :== 'dataset' Equal Id // should return a Symbol
+FaultModel :== 'faultModel' Equal ('stuck_at_0' | 'stuck_at_1' | 'bit_flips') // should return a FaultType
+CnnModel :== 'cnnModel' Equal Id
+ComputationTime :== 'computeTime' Equal Int //time in us
+Header :== Hashtag CnnModel Hashtag Dataset Hashtag FaultModel
+ColumnsHeader :== 'testIdx' Coma 'inputIdx' Coma 'layerIdx' Coma 'signalIdx' Coma 'bitPosition' Coma 'classResults'
+ColumnsHeaderGold :== 'inputIdx' Coma 'classResults'
+Results :== (Int Coma Id Coma Id Coma Id Coma Int Coma Id)+
+GoldResults :== (Int Coma Id Coma Null Coma Null Coma Null Coma Id)+
+ResultsFile :== Header ColumnsHeader Results
+GoldFile:== Header ColumnsHeaderGold GoldResults
+
+Hex := 0x[0-9,a-f]+
+TestIdx :== Hex
+Score :== Hex
+Header :== ##### Result from fault injection campaign ##### #data=Int #label=Int #+
+Result :== TestIdx (, Score)+
+ResultsFile :== Header Result+
+
+HeaderCampaign := ### Campaign Id ### #Layer, Channel, Bit, Type, Start Time, Stop Time
+Injection :== Int , Int , Int , (NONE | STUCK_AT_1 | STCUK_AT_0 | BITFLIP) , Int , Int
+CampaignFile :== HeaderCampaign Injection+

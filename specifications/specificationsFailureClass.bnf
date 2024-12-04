@@ -1,0 +1,52 @@
+failureImpactParser ::= booleanExpression comment?
+booleanExpression ::= logicNot? ("(" booleanExpression ")" | boolean) (logicOperator logicNot? ("(" booleanExpression ")" | boolean))*
+logicOperator ::= "&&" | "||"
+logicNot ::= "!"
+
+conditionNumber ::= (arithExpr | number ) testOperator (arithExpr | number )
+conditionString ::= label testEquality label
+boolean ::= conditionNumber | conditionString | functionBoolean
+
+arithExpr ::= addition | "|" arithExpr "|"
+
+addition ::= term (additionOperator term)?
+term ::= factor (productOperator  factor)*
+factor ::= "(" arithExpr ")" | number
+productOperator ::= "*" | "/"
+additionOperator ::= "+" | "-"
+number ::= integer | float
+
+labels ::= "labels"
+label ::= "observedClassif" | "expectedClassif" | string | "label"
+scores ::= "expectedScores" | "observedScores"
+score ::= (label "." scoreType) | (scores "(" digits ")")
+
+scoreType ::= "expectedScore" | "observedScore"
+
+rank ::= "." scoreType "." "rank"
+softmax ::= "." scoreType "." "softmax"
+
+count ::= ".count" "(" internalCondition ")"
+argmax ::= ".argmax"
+max ::= ".max"
+
+functionBoolean ::= labels "." ("forall" | "exists") "(" internalCondition ")"
+
+internalCondition ::= ( booleanExpression)
+
+
+attribute ::= (label ( rank | score | softmax) )| (scores "(" digits ")")
+
+comment ::= ("//" string | "/*" string "*/")
+
+
+testOperator ::= testEquality | ("<""="?) | (">""="?)
+testEquality ::= "==" | "!="
+float ::= "-"? digits "." digits | max | score | softmax
+integer ::= "-"? digits | rank | count
+string ::= "'" {alphaChar | digit}+ "'"
+
+
+alphaChar ::= "a"| "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
+digits ::= (digit)+
+digit ::= "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"

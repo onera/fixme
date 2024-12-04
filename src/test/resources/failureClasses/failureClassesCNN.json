@@ -1,0 +1,140 @@
+{
+  "failureClasses": [
+    {
+      "name": "Masked",
+      "expression": "labels.forall(label.observedScore == label.expectedScore)"
+    },
+    {
+      "name": "Observed",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && observedClassif==expectedClassif"
+    },
+    {
+      "name": "Misclassification",
+      "expression": "observedClassif!=expectedClassification"
+    },
+    {
+      "name": "0-misc",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank==0"
+    },
+    {
+      "name": "1-misc",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank==1"
+    },
+    {
+      "name": "2-misc",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank==2"
+    },
+    {
+      "name": "3-misc",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank==3"
+    },
+    {
+      "name": "4-misc",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank==4"
+    },
+    {
+      "name": "5-misc",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank==5"
+    },
+    {
+      "name": "6-misc",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank==6"
+    },
+    {
+      "name": "7-misc",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank==7"
+    },
+    {
+      "name": "8-misc",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank==8"
+    },
+    {
+      "name": "9-misc",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank==9"
+    },
+    {
+      "name": "SC-1",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank>=1"
+    },
+    {
+      "name": "SC-2",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank>=2"
+    },
+    {
+      "name": "SC-3",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank>=3"
+    },
+    {
+      "name": "SC-4",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank>=4"
+    },
+    {
+      "name": "SC-5",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank>=5"
+    },
+    {
+      "name": "SC-6",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank>=6"
+    },
+    {
+      "name": "SC-7",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank>=7"
+    },
+    {
+      "name": "SC-8",
+      "expression": "observedClassif!=expectedClassif && expectedClassif.observedScore.rank>=8"
+    },
+    {
+      "name": "TopScoreDeg>5%",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && observedClassif==expectedClassif && |(observedClassif.observedScore - expectedClassif.expectedScore)*100/expectedClassif.expectedScore| > 5"
+    },
+    {
+      "name": "TopScoreDeg>10%",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && observedClassif==expectedClassif && |(observedClassif.observedScore - expectedClassif.expectedScore)*100/expectedClassif.expectedScore| > 10"
+    },
+    {
+      "name": "TopConfDeg>5%",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && observedClassif==expectedClassif && expectedClassif.expectedScore.softmax > observedClassif.observedScore.softmax && |100*(expectedClassif.expectedScore.softmax - observedClassif.observedScore.softmax)| > 5"
+    },
+    {
+      "name": "TopConfDeg>10%",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && observedClassif==expectedClassif && expectedClassif.expectedScore.softmax > observedClassif.observedScore.softmax && |100*(expectedClassif.expectedScore.softmax - observedClassif.observedScore.softmax)| > 10"
+    },
+    {
+      "name": "TopConfDeg>20%",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && observedClassif==expectedClassif && expectedClassif.expectedScore.softmax > observedClassif.observedScore.softmax && |100*(expectedClassif.expectedScore.softmax - observedClassif.observedScore.softmax)| > 20"
+    },
+    {
+      "name": "TopConfDeg>30%",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && observedClassif==expectedClassif && expectedClassif.expectedScore.softmax > observedClassif.observedScore.softmax && |100*(expectedClassif.expectedScore.softmax - observedClassif.observedScore.softmax)| > 30"
+    },
+    {
+      "name": "TopConfDeg>40%",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && observedClassif==expectedClassif && expectedClassif.expectedScore.softmax > observedClassif.observedScore.softmax && |100*(expectedClassif.expectedScore.softmax - observedClassif.observedScore.softmax)| > 40"
+    },
+    {
+      "name": "TopConfDeg>50%",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && observedClassif==expectedClassif && expectedClassif.expectedScore.softmax > observedClassif.observedScore.softmax && |100*(expectedClassif.expectedScore.softmax - observedClassif.observedScore.softmax)| > 50"
+    },
+    {
+      "name": "TopConfDeg",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && observedClassif==expectedClassif && expectedClassif.expectedScore.softmax > observedClassif.observedScore.softmax"
+    },
+    {
+      "name": "NberModifScore>2",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && labels.count(label.observedScore!=label.expectedScore) > 2"
+    },
+    {
+      "name": "NberModifScore>5",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && labels.count(label.observedScore!=label.expectedScore) > 5"
+    },
+    {
+      "name": "NberModifRank>2",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && labels.count(label.observedScore.rank!=label.expectedScore.rank)>2"
+    },
+    {
+      "name": "total",
+      "expression": "1==1"
+    }
+  ]
+}

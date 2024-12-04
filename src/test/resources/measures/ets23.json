@@ -1,0 +1,197 @@
+{
+  "name": "ets23",
+  "injectionImpacts": [
+    {
+      "name": "always masked",
+      "expression": [
+        "!exists('Misclassification') && !exists('Observed')",
+        "true"
+      ]
+    },
+    {
+      "name": "observed",
+      "expression": [
+        "!exists('Misclassification')",
+        "exists('Observed')"
+      ]
+    },
+    {
+      "name": "misclassification",
+      "expression": [
+        "true",
+        "exists('Misclassification')"
+      ]
+    },
+    {
+      "name": "0-misc",
+      "expression": [
+        "!exists('SC-1')",
+        "exists('0-misc')"
+      ]
+    },
+    {
+      "name": "1-misc",
+      "expression": [
+        "!exists('SC-2')",
+        "exists('1-misc')"
+      ]
+    },
+    {
+      "name": "2-misc",
+      "expression": [
+        "!exists('SC-3')",
+        "exists('2-misc')"
+      ]
+    },
+    {
+      "name": "3-misc",
+      "expression": [
+        "!exists('SC-4')",
+        "exists('3-misc')"
+      ]
+    },
+    {
+      "name": "4-misc",
+      "expression": [
+        "!exists('SC-5')",
+        "exists('4-misc')"
+      ]
+    },
+    {
+      "name": "5-misc",
+      "expression": [
+        "!exists('SC-6')",
+        "exists('5-misc')"
+      ]
+    },
+    {
+      "name": "6-misc",
+      "expression": [
+        "!exists('SC-7')",
+        "exists('6-misc')"
+      ]
+    },
+    {
+      "name": "7-misc",
+      "expression": [
+        "!exists('SC-8')",
+        "exists('7-misc')"
+      ]
+    },
+    {
+      "name": "8-misc",
+      "expression": [
+        "!exists('9-misc')",
+        "exists('8-misc')"
+      ]
+    },
+    {
+      "name": "9-misc",
+      "expression": [
+        "true",
+        "exists('9-misc')"
+      ]
+    },
+    {
+      "name": "topScoreDegraded<=10%",
+      "expression": [
+        "!exists('TopScoreDeg>10') && !exists('Misclassification')",
+        "exists('Observed')"
+      ]
+    },
+    {
+      "name": "topScoreDegraded<=5%",
+      "expression": [
+        "!exists('TopScoreDeg>5') && !exists('Misclassification')",
+        "exists('Observed')"
+      ]
+    },
+    {
+      "name": "topConfDegraded<=5%",
+      "expression": [
+        "!exists('TopConfDeg>5%') && !exists('Misclassification')",
+        "exists('Observed') && exists('TopConfDeg')"
+      ]
+    },
+    {
+      "name": "topConfDeg",
+      "expression": [
+        "!exists('Misclassification')",
+        "exists('TopConfDeg') && exists('Observed')"
+      ]
+    },
+    {
+      "name": "topConfDegraded<=20%",
+      "expression": [
+        "!exists('TopConfDeg>20%') && !exists('Misclassification')",
+        "exists('Observed') && exists('TopConfDeg')"
+      ]
+    },
+    {
+      "name": "topConfDegraded<=30%",
+      "expression": [
+        "!exists('TopConfDeg>30%') && !exists('Misclassification')",
+        "exists('Observed') && exists('TopConfDeg')"
+      ]
+    },
+    {
+      "name": "topConfDegraded<=40%",
+      "expression": [
+        "!exists('TopConfDeg>40%') && !exists('Misclassification')",
+        "exists('Observed') && exists('TopConfDeg')"
+      ]
+    },
+    {
+      "name": "topConfDegraded<=50%",
+      "expression": [
+        "!exists('TopConfDeg>50%') && !exists('Misclassification')",
+        "exists('Observed') && exists('TopConfDeg')"
+      ]
+    },
+    {
+      "name": "topConfDegraded>50%",
+      "expression": [
+        "!exists('Misclassification')",
+        "exists('Observed') && exists('TopConfDeg>50%')"
+      ]
+    },
+    {
+      "name": "scoresModified<=2",
+      "expression": [
+        "!exists('NberModifScore>2') && !exists('Misclassification')",
+        "exists('Observed')"
+      ]
+    },
+    {
+      "name": "scoresModified>5",
+      "expression": [
+        "!exists('Misclassification')",
+        "exists('Observed') && exists('NberModifScore>5')"
+      ]
+    },
+    {
+      "name": "scoresModified<=5",
+      "expression": [
+        "!exists('NberModifScore>5') && !exists('Misclassification')",
+        "exists('Observed')"
+      ]
+    },
+    {
+      "name": "rankModified<=2",
+      "expression": [
+        "!exists('NberModifRank>2') && !exists('Misclassification')",
+        "exists('Observed')"
+      ]
+    },
+    {
+      "name": "total",
+      "expression": [
+        "true",
+        "true"
+      ]
+    }
+  ],
+  "projection": [
+    "class"
+  ]
+}
