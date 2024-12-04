@@ -1,19 +1,23 @@
 # Flow Inspector X Modelling Errors (FIXME) v1.0
 
-FIXME is a tool coded in Scala used to analyse fault injection strategies targeting CNN hardware accelerators 
+FIXME is a tool coded in Scala used to analyse fault injection strategies targeting CNN hardware accelerators
 to improve the fault injection experiments on such hardware architectures. It uses the formal modelling of RTL defined in
 [Quality of fault injection strategies on hardware accelerator](https://link.springer.com/chapter/10.1007/978-3-031-14835-4_15)
 
 This tool currently supports:
+
 1. Analysis of accelerator using flow based modelling for improving fault injection:
-  - computation of alive intervals of registers for any input data
-  - computation of fault equivalence classes for any input flow
-  - coverage computation of any provided fault injection strategy (i.e. fault list)
+
+- computation of alive intervals of registers for any input data
+- computation of fault equivalence classes for any input flow
+- coverage computation of any provided fault injection strategy (i.e. fault list)
+
 2. Analysis of fault injection experiments for fault equivalence refinement
-  - processing results from fault injection campaign on CNN accelerator streaming architecture
-  - computation of equivalence classes based on the effect on CNN scores and/or classfication
-  - support addition of custom metrics (indicators)
- 
+
+- processing results from fault injection campaign on CNN accelerator streaming architecture
+- computation of equivalence classes based on the effect on CNN scores and/or classfication
+- support addition of custom metrics (indicators)
+
 > **Quick Setup**
 > Please follow the steps in [docker installation](#docker)
 > and then follow the [run example guide](#examples).
@@ -30,7 +34,7 @@ On Linux, install the package **docker.io**
 
 On Windows, install [Docker desktop](https://docs.docker.com/desktop/windows/install/)
 
-#### Instructions 
+#### Instructions
 
 ##### Build the docker image from sources
 
@@ -89,18 +93,18 @@ make docker_rmi
 
 #### External tools requirements
 
-Install **gnuplot**.
-
 Install **Scala Building Tool** (SBT).
 See [SBT setup](https://www.scala-sbt.org/1.x/docs/Setup.html) for instructions.
+
+Install **gnuplot** (optional for graph generation).
 
 ---
 
 ## Usage
 
 ```bash
-postprocess 1.x
-Usage: postprocess [analysis] [options] <args>...
+fixme 1.x
+Usage: fixme [analysis] [options] <args>...
 
   -v, --verbose
 some notes.
