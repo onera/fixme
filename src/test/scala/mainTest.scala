@@ -65,7 +65,7 @@ class mainTest extends AnyFlatSpec with ScalaCheckPropertyChecks with should.Mat
       //"-gcf", "output/logs/functionalClasses", // filter the injections that are functionally equivalent for all data (must be computed first)
       "-p", // "--plot":  enable generation of plotting files for gnuplot
       "-M", "src/test/resources/measures/dataImpact.json", //path to a measure file
-      "data/leNet5" // the path to the directory containing all campaign related files
+      "src/test/resources/leNet5" // the path to the directory containing all campaign related files
     ))
   }
 }
@@ -92,4 +92,20 @@ class mainTestFunctionalClasses extends AnyFlatSpec with should.Matchers {
     ))
   }
 
+}
+class mainTestFlows extends AnyFlatSpec with should.Matchers {
+  it should "export the flows in LeNet5 streaming accelerator" in {
+    main.main(Array(
+      "flows", // enable the computation of flows
+      "src/test/resources/leNet5/architecture.json" // the path to the cnn model json file
+    ))
+  }
+
+  it should "compute the coverage of input based strategy in LeNet5 streaming accelerator" in {
+    main.main(Array(
+      "coverage", // enable the computation of classes
+      "-is", "inputBased", // name of the injection strategy
+      "src/test/resources/leNet5/architecture.json" // the path to the cnn model json file
+    ))
+  }
 }

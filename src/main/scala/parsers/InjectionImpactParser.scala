@@ -46,7 +46,7 @@ object InjectionImpactParser {
 
   def ws[_: P]: P[Unit] = P(" ".rep.?)
 
-  def stringImm[_: P]: P[String] = P("'" ~ CharsWhile(c => c != ''').! ~ "'").map(s => s)
+  def stringImm[_: P]: P[String] = P("\'" ~ CharsWhile(c => c != '\'').! ~ "\'").map(s => s)
 
   def integer[_: P]: P[Int] = P("-".? ~ digits).!.map(_.toInt)
 

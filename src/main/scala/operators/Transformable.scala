@@ -206,6 +206,15 @@ object Transformable {
     val outputs: Array[Flow[T]] = Array(output)
   }
 
+  case class CnnStreamingAccelerator[T: Streamable](id: String, inputTFlow: TFlow[T], layers: Seq[HierarchicalComponent[T]]) extends HierarchicalComponent[T]{
+    val input: Flow[T] = Flow(s"$id.i", inputTFlow)
+    val output: Flow[T] = layers.last.registers.last.outputs(0).copy(id = s"$id.o")
+    val outputs: Array[Flow[T]]=Array(output)
+    val registers: Seq[Register[T]] = layers.foldLeft(Seq.empty[Register[T]]){(seq,layer) =>
+     seq ++ layer.registers
+    }
+  }
+
   trait Instances {
 
     implicit class TransformableOps[T](x: T) {
@@ -241,6 +250,28 @@ object Transformable {
 
       def transform(x: Input2D): TFlow[T] => TFlow[T] = _ =>
         (0 to x.inputShape.height * x.inputShape.width + 1).toStream.map(implicitly[Streamable[T]].genValue)
+    }
+
+    implicit def convolutionalNeuralNetworkIsTransformable[T: Streamable]: Aux[ConvolutionalNeuralNetwork, T, CnnStreamingAccelerator[T]] = new Transformable[ConvolutionalNeuralNetwork, T] {
+     type Result = CnnStreamingAccelerator[T]
+      def transform(x: ConvolutionalNeuralNetwork): TFlow[T] => CnnStreamingAccelerator[T] = flow => {
+        val layerUnits = x.layers.drop(0).foldLeft(Seq.empty[HierarchicalComponent[T]]) {
+          (seqLayer, layer) =>
+            val input = if (seqLayer.isEmpty) flow else seqLayer.last.output.tFlow
+            (for {
+             res <- layer match {
+              case l: Convolution2D => Some(l.transform(input))
+              case l: Pooling2D => Some(l.transform(input))
+              case l: Dense => Some(l.transform(input))
+              case l: Sequencer => Some(l.transform(input))
+              case _ => None
+            }
+            } yield {
+              seqLayer:+ res
+            }).getOrElse(seqLayer)
+        }
+        CnnStreamingAccelerator(x.name,flow,layerUnits)
+      }
     }
   }
 

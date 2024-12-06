@@ -1,7 +1,7 @@
 package operators
 
 import models._
-import operators.Transformable.{ConvolutionLayerUnit, Extractor, TFlow}
+import operators.Transformable.{CnnStreamingAccelerator, ConvolutionLayerUnit, Extractor, TFlow}
 import operators.all._
 import utils.UnionFind
 
@@ -547,5 +547,6 @@ object FaultEquivalenceClassBuildable {
       }
     }
   }
+
 
 }

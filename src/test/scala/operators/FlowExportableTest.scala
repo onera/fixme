@@ -128,19 +128,8 @@ class ManuscriptCh4Test extends AnyFlatSpec with ScalaCheckPropertyChecks with s
   }
   "The LeNet5 streaming accelerator" should "be exportable as flows" in {
     val lenet = mkSimpleLeNet(Input2D("input", Shape2D(32, 32), Shape2D(32, 32)))
-    val flowModel = lenet.layers.drop(0).foldLeft(Seq.empty[HierarchicalComponent[Int]]) {
-      (seqLayer, layer) =>
-        val input = if (seqLayer.isEmpty) Flow("input", inputLenet) else seqLayer.last.output
-        val res = layer match {
-          case l: Convolution2D => l.transform(input.tFlow)
-          case l: Pooling2D => l.transform(input.tFlow)
-          case l: Dense => l.transform(input.tFlow)
-          case l: Sequencer => l.transform(input.tFlow)
-        }
-        seqLayer :+ res
-    }
-
-    val flows = flowModel.flatMap(_.registers.flatMap(_.outputs))
+    val flowModel = lenet.transform(inputLenet)
+    val flows = flowModel.layers.flatMap(_.registers.flatMap(_.outputs))
     val nbAlive = flows.map(_.tFlow.size).sum
     println(nbAlive)
     //    clu.exportTFlows

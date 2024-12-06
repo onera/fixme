@@ -9,7 +9,7 @@ class completeAnalysis extends AnyFlatSpec with ScalaCheckPropertyChecks with sh
       "-df", "(0,1000)", // "filter the  campaign results files "datalog_0","datalog_1",...,"datalog_9"
       "-v", // "--verbose": enable printing results in console
       "-ex", "bitflip", // exclude result directories containg "bitflip"
-      "data/leNet5" // the path to the directory containing all campaign related files
+      "src/test/resources/leNet5" // the path to the directory containing all campaign related files
     ))
   }
 
@@ -20,7 +20,8 @@ class completeAnalysis extends AnyFlatSpec with ScalaCheckPropertyChecks with sh
       "-v", // "--verbose": enable printing results in console
       "-ex", "bitflip",
       //"-gcf", "output/logs/functionalClassesEqScores.csv", // pass a functional classes list (must be computed first)
-      //"-p", // "--plot":  enable generation of plotting files for gnuplot
+      "-fc","src/test/resources/failureClasses/failureClassesCNN.json",
+      "-p", // "--plot":  enable generation of plotting files for gnuplot
       "-M", "src/test/resources/measures/ets23.json", //path to a measure file
       "src/test/resources/leNet5" // the path to the directory containing all campaign related files
     ))

@@ -8,16 +8,16 @@ scalaVersion := "2.12.14"
 
 
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % "3.2.1",
-  "org.apache.spark" %% "spark-sql" % "3.2.1",
-  "org.apache.spark" %% "spark-streaming" % "3.2.1",
-  "org.apache.logging.log4j" % "log4j-core" % "2.17.2"
+  "org.apache.spark" %% "spark-core" % "3.5.3",
+  "org.apache.spark" %% "spark-sql" % "3.5.3",
+  "org.apache.spark" %% "spark-streaming" % "3.5.3",
+  "org.apache.logging.log4j" % "log4j-core" % "2.24.2"
 )
 
 
 //Set spark logging level
 fork / run := true
-javaOptions in run ++= Seq(
+javaOptions / run := Seq(
   "-Dlog4j.debug=true",
   "-Dlog4j.configuration=log4j.properties")
 outputStrategy := Some(StdoutOutput)
@@ -32,10 +32,10 @@ libraryDependencies ++= Seq(
 ).map(_ % circeVersion)
 
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.19" % "test"
 libraryDependencies += "org.scalatestplus" %% "scalacheck-1-15" % "3.2.11.0" % "test"
 
-libraryDependencies += "com.github.scopt" %% "scopt" % "4.0.1"
-libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2"
-libraryDependencies += "com.lihaoyi" %% "fastparse" % "2.3.3"
+libraryDependencies += "com.github.scopt" %% "scopt" % "4.1.0"
+libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "2.4.0"
+libraryDependencies += "com.lihaoyi" %% "fastparse" % "3.1.1"
 scalacOptions += "-feature"

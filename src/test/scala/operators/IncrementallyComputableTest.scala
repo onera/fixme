@@ -402,7 +402,7 @@ class MeasuresOnScoreEqualityClassesTest extends AnyFlatSpec with MeasuresOnScor
     }
   }
 
-  it should "compute total impact count measures for full bitflips" in {
+  it should "compute total impact count measures for full bit flips" in {
     for {
       campaign <- getCampaignFiltered(BITFLIP, fullTestEnable, false)
     } yield {
@@ -444,7 +444,7 @@ class MeasuresOnScoreEqualityClassesTest extends AnyFlatSpec with MeasuresOnScor
 
   it should "compute data measures for full stuck-at-0" in {
     for {
-      campaign <- getCampaignFiltered(STUCK_AT_0, fullTestEnable, false)
+      campaign <- getCampaignFiltered(STUCK_AT_0, fullTestEnable, clearLogs = false)
     } yield {
       println("Computing data measures for stuck_at_0")
       campaign.computeDataMeasures(s"-classes${name}SA0")
@@ -454,7 +454,7 @@ class MeasuresOnScoreEqualityClassesTest extends AnyFlatSpec with MeasuresOnScor
 
   it should "compute data measures for full stuck-at-1" in {
     for {
-      campaign <- getCampaignFiltered(STUCK_AT_1, fullTestEnable, false)
+      campaign <- getCampaignFiltered(STUCK_AT_1, fullTestEnable, clearLogs = false)
     } yield {
       println("Computing data measures for stuck_at_1")
       campaign.computeDataMeasures(s"-classes${name}SA1")
@@ -463,7 +463,7 @@ class MeasuresOnScoreEqualityClassesTest extends AnyFlatSpec with MeasuresOnScor
 
   it should "compute data measures for full bitflips" in {
     for {
-      campaign <- getCampaignFiltered(BITFLIP, fullTestEnable, false)
+      campaign <- getCampaignFiltered(BITFLIP, fullTestEnable, clearLogs = false)
     } yield {
       println("Computing data measures for bitflips")
       campaign.computeDataMeasures(s"-classes${name}BF")
@@ -485,7 +485,7 @@ class ResetTests extends AnyFlatSpec with MeasuresOnScoreEqualityClasses {
 
   it should "reset data measures only" in {
     for {
-      campaign <- getCampaignFiltered(STUCK_AT_0, false, true)
+      campaign <- getCampaignFiltered(STUCK_AT_0, fullTest = false, clearLogs = true)
       campaignInitial <- getCampaignTest(STUCK_AT_0, false)
     } {
       campaign.computeDataMeasures(s"-classesTestSA0")
@@ -497,7 +497,7 @@ class ResetTests extends AnyFlatSpec with MeasuresOnScoreEqualityClasses {
 }
 
 class ScoreEquivalenceClassesSizes extends AnyFlatSpec with MeasuresOnScoreEqualityClasses {
-  "scoreEquaulity size post process" should "compute the size of classes for stuck-at 0" in {
+  "scoreEquality size post process" should "compute the size of classes for stuck-at 0" in {
     for {
       campaign <- getCampaignFiltered(STUCK_AT_0, true)
       resultClassesFile = campaign.computeScoreEquivalenceClassesMap("-fullSA0")
@@ -513,7 +513,7 @@ class ScoreEquivalenceClassesSizes extends AnyFlatSpec with MeasuresOnScoreEqual
   }
   it should "compute the size of classes for stuck-at 1" in {
     for {
-      campaign <- getCampaignFiltered(STUCK_AT_1, true)
+      campaign <- getCampaignFiltered(STUCK_AT_1, fullTest = true)
       resultClassesFile = campaign.computeScoreEquivalenceClassesMap("-fullSA1")
     } {
       val s = Source.fromFile(resultClassesFile)
@@ -528,7 +528,7 @@ class ScoreEquivalenceClassesSizes extends AnyFlatSpec with MeasuresOnScoreEqual
 
   it should "compute the size of classes for bit-flips" in {
     for {
-      campaign <- getCampaignFiltered(BITFLIP, true)
+      campaign <- getCampaignFiltered(BITFLIP, fullTest = true)
       resultClassesFile = campaign.computeScoreEquivalenceClassesMap("-fullBF")
     } {
       val s = Source.fromFile(resultClassesFile)

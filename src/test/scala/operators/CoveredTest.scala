@@ -5,8 +5,10 @@ import operators.Transformable.TFlow
 import operators.all._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should
-import utils.FileManager.locateTempFile
+import parsers.CNNJsonParser
+import utils.FileManager.{extractResourceAsFile, locateTempFile}
 
+import java.io.File
 import scala.io.Source
 
 class CoveredTest extends AnyFlatSpec with should.Matchers {
@@ -395,5 +397,16 @@ class CoveredManuscriptTests extends AnyFlatSpec with should.Matchers {
     val coveredBf = testCase0.coveredBfCount(inputOnly, flowCase0)
     val coveredSaX = testCase0.coveredSaXCount(inputBased)
     println(s"covered bf=${coveredBf}, covered sax=${coveredSaX}")
+  }
+
+  it should "compute the coverage of the LeNet5 streaming accelerator built from the keras description" in {
+    for {
+      modelFile <- extractResourceAsFile("leNet5/architecture.json")
+      model <- CNNJsonParser.parseModel(new File(modelFile))
+      hwModel = model.sequential("dense", 10).sequential("dense_1", 21).appendLeft(model.input2D)
+    } {
+     val flowModel = hwModel.transform(flowCase4)
+      println(hwModel.name)
+    }
   }
 }
