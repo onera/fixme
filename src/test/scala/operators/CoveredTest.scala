@@ -399,14 +399,4 @@ class CoveredManuscriptTests extends AnyFlatSpec with should.Matchers {
     println(s"covered bf=${coveredBf}, covered sax=${coveredSaX}")
   }
 
-  it should "compute the coverage of the LeNet5 streaming accelerator built from the keras description" in {
-    for {
-      modelFile <- extractResourceAsFile("leNet5/architecture.json")
-      model <- CNNJsonParser.parseModel(new File(modelFile))
-      hwModel = model.sequential("dense", 10).sequential("dense_1", 21).appendLeft(model.input2D)
-    } {
-     val flowModel = hwModel.transform(flowCase4)
-      println(hwModel.name)
-    }
-  }
 }

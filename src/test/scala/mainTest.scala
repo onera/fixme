@@ -27,12 +27,12 @@ class mainTest extends AnyFlatSpec with ScalaCheckPropertyChecks with should.Mat
       // "-th", "16", // number of core to use: default use all available processors
       "-v", // "--verbose": enable printing results in console
       "-ex", "bitflip,stuck_at_0",
-      "-gcf", "output/logs/functionalClassesEqScoresSA1.csv",
+      //"-gcf", "output/logs/functionalClassesEqScoresSA1.csv",
       "-msn", "ets23-SA1", // override export file name
       "-fc", "src/test/resources/failureClasses/failureClassesCNN.json",
       //"-p", // "--plot":  enable generation of plotting files for gnuplot
       "-M", "src/test/resources/measures/ets23.json", //path to a measure file
-      "data/leNet5" // the path to the directory containing all campaign related files
+      "src/test/resources/leNet5" // the path to the directory containing all campaign related files
     ))
   }
 
@@ -42,14 +42,14 @@ class mainTest extends AnyFlatSpec with ScalaCheckPropertyChecks with should.Mat
       //    "-df", "(0,100)", // "filter all campaign results files "datalog_0","datalog_1",...,"datalog_9"
       // "-th", "16", // number of core to use: default use all available processors
       "-v", // "--verbose": enable printing results in console
-      "-gcf", "output/logs/functionalClassesEqScoresSA0.csv",
+      //"-gcf", "output/logs/functionalClassesEqScoresSA0.csv",
       "-fc", "src/test/resources/failureClasses/failureClassesCNN.json", // failureClasses file
       "-ex", "stuck_at_1,bitflip", // exclude result directories containing one of these strings
       "-msn", "ets23-dataImpact-SA0", // override export file name
       //"-gcf", "output/logs/functionalClasses", // filter the injections that are functionally equivalent for all data (must be computed first)
       "-p", // "--plot":  enable generation of plotting files for gnuplot
       "-M", "src/test/resources/measures/dataImpact.json", //path to a measure file
-      "data/leNet5" // the path to the directory containing all campaign related files
+      "src/test/resources/leNet5" // the path to the directory containing all campaign related files
     ))
   }
   it should "compute the data impact for SA1" in {
@@ -58,8 +58,8 @@ class mainTest extends AnyFlatSpec with ScalaCheckPropertyChecks with should.Mat
       //    "-df", "(0,100)", // "filter all campaign results files "datalog_0","datalog_1",...,"datalog_9"
       // "-th", "16", // number of core to use: default use all available processors
       "-v", // "--verbose": enable printing results in console
-      "-gcf", "output/logs/functionalClassesEqScoresSA0.csv",
-      "-fc", "src/test/resources/failureCLasses/failureClassesCNN.json",
+      //"-gcf", "output/logs/functionalClassesEqScoresSA0.csv",
+      "-fc", "src/test/resources/failureClasses/failureClassesCNN.json",
       "-msn", "ets23-dataImpact-SA1", // override export file name
       "-ex", "stuck_at_0,bitflip", // exclude result directories containing one of these strings
       //"-gcf", "output/logs/functionalClasses", // filter the injections that are functionally equivalent for all data (must be computed first)

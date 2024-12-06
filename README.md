@@ -104,25 +104,32 @@ Install **gnuplot** (optional for graph generation).
 
 ```bash
 fixme 1.x
-Usage: fixme [analysis] [options] <args>...
+Usage: fixme [analysis|flows|coverage] [options] <args>...
 
   -v, --verbose
 some notes.
 
-Command: analysis [default] [options] CampaignDirectory
+Command: analysis [options] CampaignDirectory
+  -M, --measures <MeasureStrategyFile> // Measure strategy file contains several indicators to be applied to campaign results
+  -cc, --consistency
+  -msn, --overrideMsName <value>
+  -fc, --failureClasses <JSON> // Failure Classes to use with the measure strategy
+  -p, --plot               // Enable plot generation
+  -cps, --checkpointStep <value> // the number of data to treat before saving a temporary csv measure file.
+  -th, --threads <value>   // number of threads to use
+  -gcf, --globalClassFilter <value> // global class log file path
+  -df, --datasetFilter <minIndex,maxIndex> // Limit the number of files processed (according to Regex filter on file names) default everything
+  -ex, --excludeResults <string,string,...> // Limit the number of files processed according to filter on path default everything
+  CampaignDirectory        // Directory containing all campaign files and results, ex: data/leNet5
 
-Command: analysis default
+Command: flows cnnModelFile
 
-  CampaignDirectory        Directory containing all campaign files and results, ex: data/leNet5
-  -M, --measures <MeasureStrategyFile>
-                           Measure strategy file contains several indicators to be applied to campaign results
-  -i, --indicator <JSON1 JSON2 ...>
-                           Indicators to add to measure strategy
-  -I, --indicatorDir <indicatorDirectory>
-                           Directory of indicators to add to measure strategy
-  -df, --datasetFilter <minIndex,maxIndex>
-                           Limit the number of files processed
-  -p, --plot               Enable plot generation
+  cnnModelFile             Json Keras file containing the CNN model topology
+  
+Command: coverage [options] cnnModelFile
+
+  -is, --injectionStrategy <value> // Name of the injection strategy to use (inputBase,inputOnly,preRegisters,postRegisters
+  cnnModelFile             Json Keras file containing the CNN model topology
 ```
 
 The main application is launched by executing the command:

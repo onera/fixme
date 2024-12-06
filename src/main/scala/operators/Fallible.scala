@@ -227,7 +227,7 @@ object Fallible {
             t.prodRegister.output.id.replace("prodRegister", s"prod_$cIn"),
             t.prodRegister.input.id.replace("prodRegister", s"prodRegister_$cIn"),
             t.prodRegister.input.id.replace("prodRegister", s"prod_$cIn"),
-            s"${t.id}.ncu_$cOut.add.i_$cIn"
+            s"${t.id}.add.i_$cIn"
           )
         } yield
           id.replace(t.id, s"${t.id}.ncu_$cOut")
