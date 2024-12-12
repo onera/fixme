@@ -175,7 +175,7 @@ sbt:fixme> run coverage -is inputBased src/test/resources/leNet5/architecture.js
 
 The postprocessing tool requires several files in
 the data directory describing the campaign to analyse.
-> Info: By default, the program looks into the **data/leNet5** directory.
+> Info: An example directory is provided in the test resources folder.
 
 A typical campaign folder is structured as such:
 
@@ -202,6 +202,30 @@ Where:
   - a **campaign.conf** file with all the injection points in the injection strategy
   - **datalog_xxx** files (one per input data) containing the results from the injection campaign
 
+#### Failure classes
+
+An example of failure classes as defined in the file [src/test/resources/failureClasses/failureClassesCnn.json](file:src/test/resources/failureClasses/failureClassesCnn.json)
+
+``` json
+{
+"failureClasses": [
+    {
+      "name": "Masked",
+      "expression": "labels.forall(label.observedScore == label.expectedScore)"
+    },
+    {
+      "name": "Observed",
+      "expression": "labels.exists(label.observedScore != label.expectedScore) && observedClassif==expectedClassif"
+    },
+    {
+      "name": "Misclassification",
+      "expression": "observedClassif!=expectedClassification"
+    },
+]
+}
+```
+
+`
 #### Measure strategy and indicators
 
 An indicator or measure file is a Json file describing the indicators to compute on campaign results.
@@ -234,8 +258,7 @@ Where:
   - **faultType**: the fault type (STUCK_AT_0,"STUCK_AT_1 or BITFLIP)
   - **bitIndex**: the targeted bit
   - **channelIndex**: the targeted channel
-  - **layerId**: the name of the layer in the model (cf. json keras model file)
-    >*For LeNet5: conv2d, max_pooling2d,conv2d_1, max_pooling2d_1, dense, dense_seq, dense_1, dense_1_seq, dense_2*
+  - **layerId**: the name of the layer in the model (cf. json keras model file) *e.g., for LeNet5: conv2d, max_pooling2d,conv2d_1, max_pooling2d_1, dense, dense_seq, dense_1, dense_1_seq, dense_2*
   - **inputIndex**: the index of the input image in the test dataset
   - **inputLabel**: the label of the input image
 
