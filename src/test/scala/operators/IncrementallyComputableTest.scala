@@ -47,7 +47,7 @@ class ScoreEquivalenceClassesTest extends AnyFlatSpec with should.Matchers with 
       campaign <- getCampaignTest(STUCK_AT_0, fullTest, clearLogs)
     } yield {
       println("Computing score equality equivalence classes for stuck_at_0")
-      campaign.computeScoreEquivalenceClasses("-${name}SA0")
+      campaign.computeScoreEquivalenceClasses(s"-${name}SA0")
     }
   }
 
@@ -66,7 +66,7 @@ class ScoreEquivalenceClassesTest extends AnyFlatSpec with should.Matchers with 
       campaign <- getCampaignTest(BITFLIP, fullTest, false)
     } yield {
       println("Computing score equality equivalence classes for bitflips")
-      campaign.computeScoreEquivalenceClasses("-${name}BF")
+      campaign.computeScoreEquivalenceClasses(s"-${name}BF")
     }
   }
 }

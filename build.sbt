@@ -3,7 +3,7 @@ name := "fixme"
 
 version := "1.0"
 
-scalaVersion := "2.12.14"
+scalaVersion := "2.12.19"
 
 
 

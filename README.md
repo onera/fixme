@@ -6,7 +6,7 @@ to improve the fault injection experiments on such hardware architectures. It us
 
 This tool currently supports:
 
-1. Analysis of accelerator using flow based modelling for improving fault injection:
+1. Analysis of streaming CNN accelerators using flow based modelling for improving fault injection:
 
 - computation of alive intervals of registers for any input data
 - computation of fault equivalence classes for any input flow
@@ -15,7 +15,7 @@ This tool currently supports:
 2. Analysis of fault injection experiments for fault equivalence refinement
 
 - processing results from fault injection campaign on CNN accelerator streaming architecture
-- computation of equivalence classes based on the effect on CNN scores and/or classfication
+- computation of equivalence classes based on the effect on CNN scores and/or classification
 - support addition of custom metrics (indicators)
 
 > **Quick Setup**
@@ -135,14 +135,43 @@ Command: coverage [options] cnnModelFile
 The main application is launched by executing the command:
 
 ```bash
-sbt run # in bash
+sbt run <command> <options> <args> # in bash
 ```
 
 ```bash
 run # in SBT shell
 ```
 
-### Mandatory campaign files
+### Identification of fault equivalence classes and coverage computation
+
+FIXME is able to identify fault equivalence in a CNN streaming based accelerator using a flow modelling.
+
+There are two modes available in the main interface:
+
+1. computation of flows of a streaming accelerator and export of the flows to latex files
+2. computation of fault equivalence classes and coverage of 3 injection strategies
+
+These two modes can be used to reproduce the results presented in TODO.
+In both cases the command takes as argument the path to a JSON file containing the description of the CNN model (in keras format) that is implemented by the target accelerator.
+
+An example for the LeNet5 model is provided in the *src/test/resources/leNet5/architecture.json* file.
+#### Examples and tests
+
+ Compute all flows temporal classes, i.e. instants when a data contributing to th CNN computation is tramsitted on each location in the accelerator.
+``` text
+sbt:fixme> run flows src/test/resources/leNet5/architecture.json
+```
+
+Compute the coverage of a fault injection strategy among the encoded ones (i.e., inputBased, inputOnly, preRegister, postRegister).
+
+``` text
+sbt:fixme> run coverage -is inputBased src/test/resources/leNet5/architecture.json
+```
+
+`
+
+### Analysis of fault injection results
+#### Mandatory campaign files
 
 The postprocessing tool requires several files in
 the data directory describing the campaign to analyse.
@@ -167,13 +196,13 @@ modelName/
 
 Where:
 
-- **architecture.json** described the CNN model (keras model in JSON format)
+- **architecture.json** describes the CNN model (keras model in JSON format)
 - **labelsDictionary.txt** contains the sorted label names associated with the CNN model (a name by line)
 - several **campaign_result** directories each containing:
   - a **campaign.conf** file with all the injection points in the injection strategy
   - **datalog_xxx** files (one per input data) containing the results from the injection campaign
 
-### Measure strategy and indicators
+#### Measure strategy and indicators
 
 An indicator or measure file is a Json file describing the indicators to compute on campaign results.
 An indicator is defined in a JSON file as such:
@@ -224,10 +253,10 @@ This indicator compute the rate of faults in the two convolution layers that res
 }
 ```
 
-## Examples
+#### Examples
 
 ### Minimal example
 
 ```bash
-(sbt) run analysis -df (0,9) -v -i src/test/resources/indicators/correct1.json data/leNet5
+(sbt) run analysis -df (0,9) -v -i src/test/resources/indicators/correct1.json src/test/resources/leNet5
 ```
