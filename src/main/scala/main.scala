@@ -288,6 +288,10 @@ def injectionAnalysis(config: Config): Unit = {
     println(s"total execution time=${(System.currentTimeMillis() - startTime).toInt} ms")
   }
 }
+  /**
+   * Compute all flows in a streaming accelerator implementing the CNN topology described in a json file
+   * Exports the instants of each Layer unit into LaTeX files
+   **/
   def flowAnalysis(config: Config) : Unit = {
     (for {
     cnnModel <- CNNJsonParser.parseModel(config.cnnModelFile)
@@ -300,13 +304,20 @@ def injectionAnalysis(config: Config): Unit = {
   }).getOrElse(println("error while parsing CNN model"))
   }
 
+  /**
+   * Compute the fault list coverage of one of the supplied fault injection strategy
+   * First computes and export the fault equivalence classes of the accelerator unless a previous
+   * checkpoint file is found in the output dir
+   *   */
   def coverageAnalysis(config: Config) : Unit = {
     (for {
       cnnModel <- CNNJsonParser.parseModel(config.cnnModelFile)
+      // TODO: make an interface/parser let the user configure the sequential layers
       hwModel = cnnModel.sequential("dense", 10).sequential("dense_1", 21).appendLeft(cnnModel.input2D)
     } yield {
       val inputShape = cnnModel.input2D.inputShape
       val imageInput = (1 to inputShape.height*inputShape.width).toStream
+       // TODO: make a parser to let the user input a custom injection strategy
      val injectionStrategy = config.injectionStrategy match {
         case "inputBased" => InjectionStrategy.Implicits.InputBased
         case "inputOnly" => InjectionStrategy.Implicits.InputOnly
@@ -325,7 +336,7 @@ def injectionAnalysis(config: Config): Unit = {
       case InjectionAnalysis => injectionAnalysis(config)
       case FlowAnalysis => flowAnalysis(config)
       case Coverage => coverageAnalysis(config)
-      case _ => println("unimplemented cli command")
+      case _ => println("unknown cli command")
     }
   }
 
